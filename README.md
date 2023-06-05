@@ -428,10 +428,6 @@ oss:
 
 [grpc+ssl](https://github.com/qinguoyi/osproxy-grpc)
 
-## 致谢
-
-[![Star History Chart](https://api.star-history.com/svg?repos=qinguoyi/osproxy&type=Date)](https://star-history.com/#qinguoyi/osproxy&Date)
-
 ## License
 
 
