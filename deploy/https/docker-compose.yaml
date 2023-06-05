@@ -1,0 +1,77 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    container_name: storage_postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: '123456'
+      POSTGRES_USER: 'postgres'
+    ports:
+      - '5432:5432'
+    volumes:
+      - /home/lighthouse/pg:/var/lib/postgresql/data   # 修改为你的路径
+    networks:
+      - app-network
+
+  redis:
+    image: redis
+    container_name: storage_redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - /home/lighthouse/redis:/data                  # 修改为你的路径
+    networks:
+      - app-network
+    command: --requirepass '123456'
+  minio:
+    image: minio/minio
+    container_name: storage_minio
+    restart: always
+    environment:
+      MINIO_ACCESS_KEY: 'minioadmin'
+      MINIO_SECRET_KEY: 'minioadmin'
+    networks:
+      - app-network
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - /home/lighthouse/minio/data:/data            # 修改为你的路径
+      - /home/lighthouse/minio/config:/root/.minio   # 修改为你的路径
+    command: server --console-address ':9001' /data
+    privileged: true
+  app:
+    image: qinguoyi/object-storage-proxy:0.4         # 修改为你的镜像
+    container_name: storage
+    restart: always
+    networks:
+      - app-network
+    ports:
+      - '8888:8888'
+    volumes:
+      - /home/lighthouse/conf:/storage/conf         # 修改为你的路径
+      - /home/lighthouse/store:/storage/localstore  # 修改为你的路径
+    depends_on:
+      - db
+      - redis
+      - minio
+  nginx:
+    image: nginx
+    container_name: storage_nginx
+    restart: always
+    volumes:
+      - /home/lighthouse/nginx.conf:/etc/nginx/nginx.conf:ro  # 修改为你的路径
+      - /home/lighthouse/server.pem:/etc/nginx/server.pem:ro  # 修改为你的证书pem
+      - /home/lighthouse/server.key:/etc/nginx/server.key:ro  # 修改为你的证书key
+    ports:
+      - "443:9999"
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+networks:
+  app-network:
+    driver: bridge

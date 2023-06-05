@@ -1,0 +1,60 @@
+app:
+  env: prod
+  port: 8888                # 服务端口
+  app_name: osproxy         # 服务名称
+  app_url: http://127.0.0.1
+
+log:
+  level: info               # 日志等级
+  root_dir: ./storage/logs  # 日志根目录
+  filename: app.log         # 日志文件名称
+  format: json              # 写入格式 可选json
+  show_line: true           # 是否显示调用行
+  max_backups: 3            # 旧文件的最大个数
+  max_size: 500             # 日志文件最大大小（MB）
+  max_age: 28               # 旧文件的最大保留天数
+  compress: true            # 是否压缩
+  enable_file: false        # 是否启用日志文件
+
+database:
+  - db_name: default
+    driver: postgres                # 数据库驱动
+    host: 127.0.0.1                 # 服务地址
+    port: 5432                      # 端口号
+    database: postgres              # 数据库名称
+    username: postgres              # 用户名
+    password: 123456                # 密码
+    charset: utf8mb4                # 编码格式
+    max_idle_conns: 10              # 空闲连接池中连接的最大数量
+    max_open_conns: 100             # 打开数据库连接的最大数量
+    log_mode: info                  # 日志级别
+    enable_lg_log: false            # 是否开启自定义日志
+    enable_file_log_writer: false   # 是否打印到日志文件
+    log_filename: sql.log           # 日志文件名称
+
+redis:
+  host: 127.0.0.1        # 服务地址
+  port: 6379             # 服务端口
+  db: 0                  # 库选择
+  password: 123456       # 密码
+
+minio:
+  endpoint: 127.0.0.1:9000      # 服务地址
+  access_key_id: minioadmin     # 用户名
+  secret_access_key: minioadmin # 密码
+  use_ssl: false                # 密码
+  enabled: true                 # 是否启用
+
+cos:
+  appid: 12***63195                              # 唯一标识
+  region: ap-nanjing                             # 地域
+  secret_id: AKIDc4GCrG*******p9GApIZdU9V        # 用户名
+  secret_key: IMDoC1uYw*******1pNTRFpBJOJzSm     # 密码
+  enabled: false                                 # 是否启用
+
+oss:
+  endpoint: oss-cn-beijing.aliyuncs.com          # 服务地址
+  access_key_id: LTAI5t*******X1tHK              # 用户名
+  access_key_secret: bfCt*******HudARdfwfvaoS    # 密码
+  enabled: false                                 # 是否启用
+
