@@ -58,3 +58,6 @@ oss:
   access_key_secret: bfCt*******HudARdfwfvaoS    # 密码
   enabled: false                                 # 是否启用
 
+
+local:
+  enabled: false                                 # 是否启用

@@ -136,6 +136,7 @@ func main() {
 			start := (currentChunk - 1) * int64(chunkSize)
 			end := minH(fileSize, start+int64(chunkSize))
 			buffer := make([]byte, end-start)
+			// 循环读取，会自动偏移
 			_, err := file.Read(buffer)
 			if err != nil && err != io.EOF {
 				fmt.Println("读取文件长度失败", err)

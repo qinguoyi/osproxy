@@ -126,6 +126,8 @@ func DownloadHandler(c *gin.Context) {
 	}
 
 	ch := make(chan []byte, 1024*1024*20)
+	// 判断是否在本地
+
 	if !meta.MultiPart {
 		go func() {
 			step := int64(1 * 1024 * 1024)
@@ -261,6 +263,7 @@ func DownloadHandler(c *gin.Context) {
 			}(i, startP, lengthP)
 		}
 	}
+
 	// 在使用 Stream 响应时，需要在调用stream之前设置status
 	c.Stream(func(w io.Writer) bool {
 		defer func() {

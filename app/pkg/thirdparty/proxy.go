@@ -122,3 +122,25 @@ func (s *storageService) MergeForward(c *gin.Context, scheme, ip, port, uid stri
 	}
 	return base.Ask(req)
 }
+
+// DownloadForward .
+func (s *storageService) DownloadForward(c *gin.Context, scheme, ip, port, downloadUrl string) (int, io.ReadCloser, http.Header, error) {
+	// 获取查询参数
+	queryParam := map[string]string{}
+	query := c.Request.URL.Query()
+	for k, v := range query {
+		queryParam[k] = v[0]
+	}
+
+	proxyUrl := fmt.Sprintf("%s://%s:%s%s", scheme, ip, port, downloadUrl)
+
+	req := base.Request{
+		Url:       proxyUrl,
+		Body:      io.NopCloser(strings.NewReader("")),
+		HeaderSet: map[string]string{},
+		Method:    "GET",
+		Params:    queryParam,
+	}
+
+	return base.AskFile(req)
+}
