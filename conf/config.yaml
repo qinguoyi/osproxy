@@ -43,7 +43,7 @@ minio:
   access_key_id: minioadmin     # 用户名
   secret_access_key: minioadmin # 密码
   use_ssl: false                # 密码
-  enabled: true                 # 是否启用
+  enabled: false                 # 是否启用
 
 cos:
   appid: 12***63195                              # 唯一标识
@@ -60,4 +60,4 @@ oss:
 
 
 local:
-  enabled: false                                 # 是否启用
+  enabled: true                                 # 是否启用

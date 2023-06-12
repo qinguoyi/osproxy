@@ -9,7 +9,7 @@ const (
 	EncryKey              = "*&^@#$storage"
 	LocalStore            = "/storage/localstore"
 	ServiceRedisPrefix    = "service:proxy"
-	ServiceRedisTTl       = time.Second * 60 * 3
+	ServiceRedisTTl       = time.Second * 3 * 60
 	S3StoragePutThreadNum = 10
 	MultiPartDownload     = 10
 )

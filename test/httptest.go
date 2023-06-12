@@ -27,7 +27,7 @@ func minH(a, b int64) int64 {
 
 func main() {
 	// 基础信息
-	baseUrl := "http://124.222.198.8"
+	baseUrl := "http://127.0.0.1:8888"
 	uploadFilePath := "./xxx.jpg"
 	uploadFile := filepath.Base(uploadFilePath)
 
