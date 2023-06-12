@@ -29,7 +29,10 @@ var (
 
 func InitStorage(conf *config.Configuration) {
 	var storageHandler CustomStorage
-	if conf.Minio.Enabled {
+	if conf.Local.Enabled {
+		storageHandler = NewLocalStorage()
+		bootstrap.NewLogger().Logger.Info("当前使用的对象存储：Local")
+	} else if conf.Minio.Enabled {
 		storageHandler = NewMinIOStorage()
 		bootstrap.NewLogger().Logger.Info("当前使用的对象存储：Minio")
 	} else if conf.Cos.Enabled {

@@ -11,4 +11,5 @@ type Configuration struct {
 	Minio    *plugins.Minio      `mapstructure:"minio" json:"minio" yaml:"minio"`
 	Cos      *plugins.Cos        `mapstructure:"cos" json:"cos" yaml:"cos"`
 	Oss      *plugins.Oss        `mapstructure:"oss" json:"oss" yaml:"oss"`
+	Local    *plugins.Local      `mapstructure:"local" json:"local" yaml:"local"`
 }

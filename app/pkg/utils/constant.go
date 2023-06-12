@@ -3,14 +3,13 @@ package utils
 import "time"
 
 const (
-	Scheme     = "http"
-	WorkID     = "workId"
-	LinkLimit  = 50
-	EncryKey   = "*&^@#$storage"
-	LocalStore = "/storage/localstore"
-	//LocalStore            = "C:\\Users\\vastaiadmin\\project\\obj-storage-proxy\\localstore"
+	Scheme                = "http"
+	WorkID                = "workId"
+	LinkLimit             = 50
+	EncryKey              = "*&^@#$storage"
+	LocalStore            = "/storage/localstore"
 	ServiceRedisPrefix    = "service:proxy"
-	ServiceRedisTTl       = time.Second * 60 * 3
+	ServiceRedisTTl       = time.Second * 3 * 60
 	S3StoragePutThreadNum = 10
 	MultiPartDownload     = 10
 )

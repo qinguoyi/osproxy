@@ -56,6 +56,7 @@ func (s *serviceRegister) HeartBeat() {
 	defer timer.Stop()
 
 	ip, err := GetOutBoundIP()
+	bootstrap.NewLogger().Logger.Info(fmt.Sprintf("当前上报ip:%s", ip))
 	if err != nil {
 		panic(err)
 	}
@@ -78,6 +79,23 @@ func (s *serviceRegister) HeartBeat() {
 					CreatedAt: time.Now().Unix(),
 				})
 				s.client.HSet(context.Background(), utils.ServiceRedisPrefix, ip, jsonByte)
+			} else {
+				bootstrap.NewLogger().Logger.Error(fmt.Sprintf("注册失败:%s", err.Error()))
+				for {
+					_, _, _, err := Ask(req)
+					if err != nil {
+						bootstrap.NewLogger().Logger.Error(fmt.Sprintf("注册失败:%s", err.Error()))
+					} else {
+						jsonByte, _ := json.Marshal(Service{
+							IP:        ip,
+							Port:      bootstrap.NewConfig("").App.Port,
+							CreatedAt: time.Now().Unix(),
+						})
+						s.client.HSet(context.Background(), utils.ServiceRedisPrefix, ip, jsonByte)
+						break
+					}
+					time.Sleep(3 * time.Second)
+				}
 			}
 
 		}

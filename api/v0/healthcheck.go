@@ -3,9 +3,9 @@ package v0
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/web"
 	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
 	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
-	"net/http"
 )
 
 var lgLogger *bootstrap.LangGoLogger
@@ -40,7 +40,8 @@ func PingHandler(c *gin.Context) {
 		panic(err)
 	}
 	lgLogger.WithContext(c).Info(fmt.Sprintf("%v", val))
-	c.String(http.StatusOK, "test router")
+	web.Success(c, "Test Router...")
+	return
 }
 
 // HealthCheckHandler 健康检查
@@ -53,5 +54,6 @@ func PingHandler(c *gin.Context) {
 //	@Success		200	{object}	web.Response
 //	@Router			/api/storage/v0/health [get]
 func HealthCheckHandler(c *gin.Context) {
-	c.String(http.StatusOK, "Health...")
+	web.Success(c, "Health...")
+	return
 }
