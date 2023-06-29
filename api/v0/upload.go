@@ -579,6 +579,7 @@ func UploadMergeHandler(c *gin.Context) {
 	if err != nil {
 		lgLogger.WithContext(c).Error("消息struct转成json字符串失败", zap.Any("err", err.Error()))
 		web.InternalError(c, "创建合并任务失败")
+		return
 	}
 	newModelTask := models.TaskInfo{
 		Status:    utils.TaskStatusUndo,
@@ -588,6 +589,7 @@ func UploadMergeHandler(c *gin.Context) {
 	if err := repo.NewTaskRepo().Create(lgDB, &newModelTask); err != nil {
 		lgLogger.WithContext(c).Error("创建合并任务失败", zap.Any("err", err.Error()))
 		web.InternalError(c, "创建合并任务失败")
+		return
 	}
 
 	// 首次写入redis 元数据和分片信息
