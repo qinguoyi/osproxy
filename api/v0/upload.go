@@ -495,7 +495,27 @@ func UploadMergeHandler(c *gin.Context) {
 		web.InternalError(c, "查询分片数据失败")
 		return
 	}
+
 	if num != int64(len(multiPartInfoList)) {
+		// 创建脏数据删除任务
+		msg := models.MergeInfo{
+			StorageUid: uid,
+			ChunkSum:   num,
+		}
+		b, err := json.Marshal(msg)
+		if err != nil {
+			lgLogger.WithContext(c).Error("消息struct转成json字符串失败", zap.Any("err", err.Error()))
+			web.InternalError(c, "分片数量和整体数量不一致，创建删除任务失败")
+		}
+		newModelTask := models.TaskInfo{
+			Status:    utils.TaskStatusUndo,
+			TaskType:  utils.TaskPartDelete,
+			ExtraData: string(b),
+		}
+		if err := repo.NewTaskRepo().Create(lgDB, &newModelTask); err != nil {
+			lgLogger.WithContext(c).Error("分片数量和整体数量不一致，创建删除任务失败", zap.Any("err", err.Error()))
+			web.InternalError(c, "分片数量和整体数量不一致，创建删除任务失败")
+		}
 		web.ParamsError(c, "分片数量和整体数量不一致")
 		return
 	}
