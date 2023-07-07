@@ -100,3 +100,16 @@ func (s *CosStorage) PutObject(bucketName, objectName, filePath, contentType str
 	}
 	return nil
 }
+
+func (s *CosStorage) DeleteObject(bucketName, objectName string) error {
+	u, _ := url.Parse(fmt.Sprintf("https://%s-%s.cos.%s.myqcloud.com", bucketName, s.Appid, s.Region))
+	b := &cos.BaseURL{BucketURL: u}
+	client := cos.NewClient(b, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  s.SecretId,
+			SecretKey: s.SecretKey,
+		},
+	})
+	_, err := client.Object.Delete(context.Background(), objectName, nil)
+	return err
+}

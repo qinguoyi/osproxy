@@ -16,6 +16,9 @@ type CustomStorage interface {
 
 	// PutObject 上传存储对象
 	PutObject(string, string, string, string) error
+
+	// DeleteObject 删除存储对象
+	DeleteObject(string, string) error
 }
 
 type LangGoStorage struct {
