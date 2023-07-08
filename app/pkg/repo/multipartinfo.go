@@ -46,7 +46,7 @@ func (r *multiPartInfoRepo) GetPartInfo(db *gorm.DB, uid, num int64, md5 string)
 
 // Updates .
 func (r *multiPartInfoRepo) Updates(db *gorm.DB, uid int64, columns map[string]interface{}) error {
-	err := db.Model(&models.MultiPartInfo{}).Where("uid = ?", uid).Updates(columns).Error
+	err := db.Model(&models.MultiPartInfo{}).Where("storage_uid = ?", uid).Updates(columns).Error
 	return err
 }
 
