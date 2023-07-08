@@ -15,7 +15,7 @@ import (
 )
 
 func init() {
-	event.NewEventsHandler().RegPreProcess(utils.TaskPartDelete, preProcessPartMerge)
+	event.NewEventsHandler().RegPreProcess(utils.TaskPartDelete, preProcessPartDelete)
 	event.NewEventsHandler().RegHandler(utils.TaskPartDelete, handlePartDelete)
 }
 
@@ -59,7 +59,14 @@ func handlePartDelete(i interface{}) error {
 		return errors.New("查询分片数据失败")
 	}
 
-	//删除本地的脏数据
+	//删除数据库中的meta信息
+	var metadataInfo models.MetaDataInfo
+	if err := lgDB.Model(&models.MetaDataInfo{}).Where("uid = ?", multiPartInfoList[0].StorageUid).Find(&metadataInfo).Error; err != nil {
+		return errors.New("查询脏数据的metadataInfo信息失败")
+	}
+	if err := lgDB.Model(&models.MetaDataInfo{}).Where("uid = ?", multiPartInfoList[0].StorageUid).Delete(&metadataInfo).Error; err != nil {
+		return errors.New("删除脏数据的metadataInfo信息失败")
+	}
 	sto := storage.NewStorage().Storage
 	for _, v := range multiPartInfoList {
 		partName := path.Join(utils.LocalStore, fmt.Sprintf("%d", msg.StorageUid), v.PartFileName)
@@ -70,6 +77,10 @@ func handlePartDelete(i interface{}) error {
 		err = sto.DeleteObject(v.Bucket, v.StorageName)
 		if err != nil {
 			return errors.New("删除对象存储的脏数据失败")
+		}
+		err = lgDB.Model(&models.MultiPartInfo{}).Where("storage_name = ?", v.StorageName).Delete(v).Error
+		if err != nil {
+			return errors.New("删除数据库分片信息错误")
 		}
 	}
 	return nil
