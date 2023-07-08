@@ -39,7 +39,6 @@ func preProcessPartDelete(i interface{}) bool {
 
 func handlePartDelete(i interface{}) error {
 	lgDB := new(plugins.LangGoDB).Use("default").NewDB()
-	var err error
 	taskID := i.(int64)
 	taskInfo, err := repo.NewTaskRepo().GetByID(lgDB, taskID)
 	if err != nil {
@@ -59,28 +58,21 @@ func handlePartDelete(i interface{}) error {
 		return errors.New("查询分片数据失败")
 	}
 
-	//删除数据库中的meta信息
-	var metadataInfo models.MetaDataInfo
-	if err := lgDB.Model(&models.MetaDataInfo{}).Where("uid = ?", multiPartInfoList[0].StorageUid).Find(&metadataInfo).Error; err != nil {
-		return errors.New("查询脏数据的metadataInfo信息失败")
+	dirName := path.Join(utils.LocalStore, fmt.Sprintf("%d", msg.StorageUid))
+	if err := os.RemoveAll(dirName); err != nil {
+		return errors.New("删除本地脏数据失败")
 	}
-	if err := lgDB.Model(&models.MetaDataInfo{}).Where("uid = ?", multiPartInfoList[0].StorageUid).Delete(&metadataInfo).Error; err != nil {
-		return errors.New("删除脏数据的metadataInfo信息失败")
+
+	if err := repo.NewMultiPartInfoRepo().Updates(lgDB, msg.StorageUid, map[string]interface{}{
+		"status": -1,
+	}); err != nil {
+		return errors.New("删除数据库分片信息错误")
 	}
+
 	sto := storage.NewStorage().Storage
 	for _, v := range multiPartInfoList {
-		partName := path.Join(utils.LocalStore, fmt.Sprintf("%d", msg.StorageUid), v.PartFileName)
-		err = os.RemoveAll(partName)
-		if err != nil {
-			return errors.New("删除本地脏数据失败")
-		}
-		err = sto.DeleteObject(v.Bucket, v.StorageName)
-		if err != nil {
+		if err := sto.DeleteObject(v.Bucket, v.StorageName); err != nil {
 			return errors.New("删除对象存储的脏数据失败")
-		}
-		err = lgDB.Model(&models.MultiPartInfo{}).Where("storage_name = ?", v.StorageName).Delete(v).Error
-		if err != nil {
-			return errors.New("删除数据库分片信息错误")
 		}
 	}
 	return nil
