@@ -76,3 +76,10 @@ func (s *MinIOStorage) StatObject(bucketName, objectName string) (int64, error) 
 	}
 	return objectInfo.Size, nil
 }
+
+func (s *MinIOStorage) DeleteObject(bucketName, objectName string) error {
+
+	ctx := context.Background()
+	err := s.client.RemoveObject(ctx, bucketName, objectName, minio.RemoveObjectOptions{})
+	return err
+}

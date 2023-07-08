@@ -81,3 +81,9 @@ func (s *LocalStorage) PutObject(bucketName, objectName, filePath, contentType s
 	}
 	return nil
 }
+
+func (s *LocalStorage) DeleteObject(bucketName, objectName string) error {
+	objectPath := path.Join(s.RootPath, bucketName, objectName)
+	err := os.RemoveAll(objectPath)
+	return err
+}

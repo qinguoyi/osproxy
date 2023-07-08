@@ -16,7 +16,8 @@ const (
 
 // 任务类型
 const (
-	TaskPartMerge = "partMerge"
+	TaskPartMerge  = "partMerge"
+	TaskPartDelete = "partDelete"
 )
 
 // 任务状态

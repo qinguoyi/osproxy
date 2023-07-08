@@ -72,3 +72,12 @@ func (s *OssStorage) PutObject(bucketName, objectName, filePath, contentType str
 	}
 	return nil
 }
+
+func (s *OssStorage) DeleteObject(bucketName, objectName string) error {
+	bucket, err := s.client.Bucket(bucketName)
+	if err != nil {
+		return err
+	}
+	err = bucket.DeleteObject(objectName)
+	return err
+}
