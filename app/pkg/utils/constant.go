@@ -33,3 +33,5 @@ const (
 	MaxWorker = 100
 	MaxQueue  = 200
 )
+
+const CompensationTotal = 5 // 补偿次数总量
