@@ -11,7 +11,7 @@ type TaskInfo struct {
 	ExtraData   string     `json:"extraData" gorm:"column:extra_data;type:text"`                     // 任务补充信息
 	NodeId      string     `json:"nodeId" gorm:"column:node_id;type:varchar(255);index:idx_node_id"` // 任务运行节点ID
 	TaskLogID   int        `json:"taskLogId" gorm:"column:task_log_id"`                              // 任务日志ID，只展示最新的任务日志ID
-	ExecuteTime int        `json:"executeTime" gorm:"column:execute_time;comment:任务执行次数"`
+	ExecuteTime int        `json:"executeTime" gorm:"column:execute_time;comment:任务执行次数;default:0"`
 	CreatedAt   *time.Time `gorm:"column:created_at;not null;comment:创建时间"`
 	UpdatedAt   *time.Time `gorm:"column:updated_at;not null;comment:更新时间"`
 }

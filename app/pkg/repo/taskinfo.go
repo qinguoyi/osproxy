@@ -34,14 +34,20 @@ func (r *taskInfoRepo) PreemptiveTaskByID(db *gorm.DB, taskID int64, nodeId stri
 // FinishTaskByID 完成任务
 func (r *taskInfoRepo) FinishTaskByID(db *gorm.DB, taskID int64, exeTime int) int64 {
 	affected := db.Model(&models.TaskInfo{}).Where("id = ? and status = ?", taskID, utils.TaskStatusRunning).
-		UpdateColumn("status", utils.TaskStatusFinish).UpdateColumn("execute_time", exeTime)
+		UpdateColumns(map[string]interface{}{
+			"status":       utils.TaskStatusFinish,
+			"execute_time": exeTime,
+		})
 	return affected.RowsAffected
 }
 
 // ErrorTaskByID 任务失败
 func (r *taskInfoRepo) ErrorTaskByID(db *gorm.DB, taskID int64, exeTime int) int64 {
 	affected := db.Model(&models.TaskInfo{}).Where("id = ? and status = ?", taskID, utils.TaskStatusRunning).
-		UpdateColumn("status", utils.TaskStatusError).UpdateColumn("status", exeTime)
+		UpdateColumns(map[string]interface{}{
+			"status":       utils.TaskStatusError,
+			"execute_time": exeTime,
+		})
 	return affected.RowsAffected
 }
 
