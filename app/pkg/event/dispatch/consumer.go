@@ -48,7 +48,7 @@ func (w *Worker) Start() {
 					// 事务更新
 					if err := lgDB.Transaction(
 						func(tx *gorm.DB) error {
-							if repo.NewTaskRepo().ErrorTaskByID(lgDB, job.TaskID, 0) == 1 {
+							if repo.NewTaskRepo().ErrorTaskByID(lgDB, job.TaskID, 1) == 1 {
 								if err := repo.TaskLogRepo.UpdateColumn(lgDB, taskLogData.ID, map[string]interface{}{
 									"status":     utils.TaskStatusError,
 									"error_info": fmt.Sprintf("不存在对应消息的handler%v\n", job.TaskType),
@@ -92,7 +92,7 @@ func (w *Worker) Start() {
 									if updateErr := repo.TaskLogRepo.UpdateColumn(lgDB, taskLogData.ID,
 										map[string]interface{}{
 											"status":     utils.TaskStatusError,
-											"error_info": "",
+											"error_info": err.Error(),
 										}); updateErr != nil {
 									}
 									if repo.NewTaskRepo().ResetTaskByID(lgDB, job.TaskID, tkInfo.NodeId) == 1 {
