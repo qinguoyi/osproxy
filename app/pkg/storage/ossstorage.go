@@ -6,7 +6,6 @@ import (
 	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
 	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
 	"io/ioutil"
-	"os"
 )
 
 // OssStorage oss存储
