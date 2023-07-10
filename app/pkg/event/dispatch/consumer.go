@@ -53,6 +53,7 @@ func (w *Worker) Start() {
 									"status":     utils.TaskStatusError,
 									"error_info": fmt.Sprintf("不存在对应消息的handler%v\n", job.TaskType),
 								}); err != nil {
+									return err
 								}
 							}
 							return nil
@@ -72,6 +73,7 @@ func (w *Worker) Start() {
 											"status":     utils.TaskStatusFinish,
 											"error_info": "",
 										}); updateErr != nil {
+										return updateErr
 									}
 								}
 								return nil
@@ -83,6 +85,7 @@ func (w *Worker) Start() {
 						if tkInfo.ExecuteTime < utils.CompensationTotal {
 							if txErr := lgDB.Transaction(
 								func(tx *gorm.DB) error {
+									_ = repo.NewTaskRepo().ResetTaskByID(lgDB, job.TaskID, tkInfo.NodeId)
 									// 更新任务信息中的执行次数
 									if updateErr := repo.NewTaskRepo().UpdateColumn(lgDB, job.TaskID,
 										"execute_time", tkInfo.ExecuteTime+1); updateErr != nil {
@@ -94,8 +97,7 @@ func (w *Worker) Start() {
 											"status":     utils.TaskStatusError,
 											"error_info": err.Error(),
 										}); updateErr != nil {
-									}
-									if repo.NewTaskRepo().ResetTaskByID(lgDB, job.TaskID, tkInfo.NodeId) == 1 {
+										return updateErr
 									}
 									return nil
 								}); txErr != nil {
@@ -109,6 +111,7 @@ func (w *Worker) Start() {
 												"status":     utils.TaskStatusError,
 												"error_info": err.Error(),
 											}); updateErr != nil {
+											return updateErr
 										}
 									}
 									return nil
