@@ -35,24 +35,13 @@ func (w *Worker) Start() {
 			case job := <-JobQueue:
 				handler := event.NewEventsHandler().GetHandler(job.TaskType)
 				var lgDB = new(plugins.LangGoDB).Use("default").NewDB()
-				var taskLogData *models.TaskLog
-				var findErr error
-
-				// 查询该任务是否已经创建过任务日志
-				taskLogData, findErr = repo.TaskLogRepo.GetByTaskID(lgDB, job.TaskID)
-				if findErr != nil {
-					// 创建日志数据
-					taskLogData = &models.TaskLog{
-						TaskID: job.TaskID,
-						Status: utils.TaskStatusRunning,
-					}
-					_ = repo.TaskLogRepo.Create(lgDB, taskLogData)
-					_ = repo.NewTaskRepo().UpdateColumn(lgDB, job.TaskID, "task_log_id", taskLogData.ID)
-				} else {
-					_ = repo.TaskLogRepo.UpdateColumn(lgDB, taskLogData.ID, map[string]interface{}{
-						"status": utils.TaskStatusRunning,
-					})
+				// 创建日志数据
+				taskLogData := models.TaskLog{
+					TaskID: job.TaskID,
+					Status: utils.TaskStatusRunning,
 				}
+				_ = repo.TaskLogRepo.Create(lgDB, &taskLogData)
+				_ = repo.NewTaskRepo().UpdateColumn(lgDB, job.TaskID, "task_log_id", taskLogData.ID)
 
 				// 没找到执行的handler
 				if handler == nil {
@@ -91,22 +80,22 @@ func (w *Worker) Start() {
 					} else {
 						// 执行失败
 						//还未达到执行次数上限
-						if tkInfo.ExecuteTime+1 < utils.CompensationTotal {
+						if tkInfo.ExecuteTime < utils.CompensationTotal {
 							if txErr := lgDB.Transaction(
 								func(tx *gorm.DB) error {
-									if repo.NewTaskRepo().ResetTaskByID(lgDB, job.TaskID, tkInfo.NodeId) == 1 {
-										// 更新任务信息中的执行次数
-										if updateErr := repo.NewTaskRepo().UpdateColumn(lgDB, job.TaskID,
-											"execute_time", tkInfo.ExecuteTime+1); updateErr != nil {
-											return updateErr
-										}
+									// 更新任务信息中的执行次数
+									if updateErr := repo.NewTaskRepo().UpdateColumn(lgDB, job.TaskID,
+										"execute_time", tkInfo.ExecuteTime+1); updateErr != nil {
+										return updateErr
+									}
 
-										if updateErr := repo.TaskLogRepo.UpdateColumn(lgDB, taskLogData.ID,
-											map[string]interface{}{
-												"status":     utils.TaskStatusUndo,
-												"error_info": "",
-											}); updateErr != nil {
-										}
+									if updateErr := repo.TaskLogRepo.UpdateColumn(lgDB, taskLogData.ID,
+										map[string]interface{}{
+											"status":     utils.TaskStatusError,
+											"error_info": "",
+										}); updateErr != nil {
+									}
+									if repo.NewTaskRepo().ResetTaskByID(lgDB, job.TaskID, tkInfo.NodeId) == 1 {
 									}
 									return nil
 								}); txErr != nil {
