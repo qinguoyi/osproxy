@@ -133,8 +133,13 @@ func DownloadHandler(c *gin.Context) {
 
 	ch := make(chan []byte, 1024*1024*20)
 	proxyFlag := false
+	// local存储: 单文件上传完uid会删除, 大文件合并后会删除
 	if bootstrap.NewConfig("").Local.Enabled {
 		dirName := path.Join(utils.LocalStore, uidStr)
+		// 不分片：单文件或大文件已合并
+		if !meta.MultiPart {
+			dirName = path.Join(utils.LocalStore, bucketName, objectName)
+		}
 		if _, err := os.Stat(dirName); os.IsNotExist(err) {
 			proxyFlag = true
 		}

@@ -176,7 +176,7 @@ func GetRange(rangeHeader string, size int64) (int64, int64) {
 		ranges := strings.Split(split[1], "-")
 		start, _ = strconv.ParseInt(ranges[0], 10, 64)
 		if ranges[1] != "" {
-			end, _ = strconv.ParseInt(ranges[0], 10, 64)
+			end, _ = strconv.ParseInt(ranges[1], 10, 64)
 		}
 		if end >= size || end == 0 {
 			end = size - 1
