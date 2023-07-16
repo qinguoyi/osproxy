@@ -1,7 +1,7 @@
 package repo
 
 import (
-	"github.com/qinguoyi/ObjectStorageProxy/app/models"
+	"github.com/qinguoyi/osproxy/app/models"
 	"gorm.io/gorm"
 )
 

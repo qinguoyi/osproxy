@@ -2,11 +2,11 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	v0 "github.com/qinguoyi/ObjectStorageProxy/api/v0"
-	"github.com/qinguoyi/ObjectStorageProxy/app/middleware"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
-	"github.com/qinguoyi/ObjectStorageProxy/config"
-	"github.com/qinguoyi/ObjectStorageProxy/docs"
+	v0 "github.com/qinguoyi/osproxy/api/v0"
+	"github.com/qinguoyi/osproxy/app/middleware"
+	"github.com/qinguoyi/osproxy/bootstrap"
+	"github.com/qinguoyi/osproxy/config"
+	"github.com/qinguoyi/osproxy/docs"
 	gs "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 )

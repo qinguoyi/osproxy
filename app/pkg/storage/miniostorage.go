@@ -3,8 +3,8 @@ package storage
 import (
 	"context"
 	"github.com/minio/minio-go/v7"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"io"
 )
 

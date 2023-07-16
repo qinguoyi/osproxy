@@ -3,9 +3,9 @@ package v0
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/base"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/web"
+	"github.com/qinguoyi/osproxy/app/pkg/base"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/app/pkg/web"
 	"os"
 	"path"
 	"strconv"

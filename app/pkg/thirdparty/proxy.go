@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/base"
+	"github.com/qinguoyi/osproxy/app/pkg/base"
 	"io"
 	"mime/multipart"
 	"net/http"

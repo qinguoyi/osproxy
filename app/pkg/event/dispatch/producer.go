@@ -2,11 +2,11 @@ package dispatch
 
 import (
 	"fmt"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/base"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/event"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/repo"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/app/pkg/base"
+	"github.com/qinguoyi/osproxy/app/pkg/event"
+	"github.com/qinguoyi/osproxy/app/pkg/repo"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"sync"
 	"time"
 )

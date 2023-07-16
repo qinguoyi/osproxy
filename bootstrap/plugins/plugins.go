@@ -2,7 +2,7 @@ package plugins
 
 import (
 	"fmt"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
+	"github.com/qinguoyi/osproxy/bootstrap"
 )
 
 // Plugin 插件接口

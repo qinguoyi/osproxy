@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
+	"github.com/qinguoyi/osproxy/bootstrap"
 	"go.uber.org/zap"
 	"time"
 )

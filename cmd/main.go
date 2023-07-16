@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/qinguoyi/ObjectStorageProxy/api"
-	"github.com/qinguoyi/ObjectStorageProxy/app"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/base"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/storage"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/api"
+	"github.com/qinguoyi/osproxy/app"
+	"github.com/qinguoyi/osproxy/app/pkg/base"
+	"github.com/qinguoyi/osproxy/app/pkg/storage"
+	"github.com/qinguoyi/osproxy/bootstrap"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 )
 
 // @title		ObjectStorageProxy

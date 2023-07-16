@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
-	"github.com/qinguoyi/ObjectStorageProxy/config"
+	"github.com/qinguoyi/osproxy/bootstrap"
+	"github.com/qinguoyi/osproxy/config"
 	"go.uber.org/zap"
 	"sync"
 )

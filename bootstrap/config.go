@@ -3,7 +3,7 @@ package bootstrap
 import (
 	"fmt"
 	"github.com/fsnotify/fsnotify"
-	"github.com/qinguoyi/ObjectStorageProxy/config"
+	"github.com/qinguoyi/osproxy/config"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"

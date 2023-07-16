@@ -1,7 +1,7 @@
 package plugins
 
 import (
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
+	"github.com/qinguoyi/osproxy/bootstrap"
 )
 
 type LangGoLocal struct {

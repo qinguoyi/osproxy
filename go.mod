@@ -1,4 +1,4 @@
-module github.com/qinguoyi/ObjectStorageProxy
+module github.com/qinguoyi/osproxy
 
 go 1.18
 

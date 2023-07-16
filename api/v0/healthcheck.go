@@ -3,9 +3,9 @@ package v0
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/web"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/app/pkg/web"
+	"github.com/qinguoyi/osproxy/bootstrap"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 )
 
 var lgLogger *bootstrap.LangGoLogger

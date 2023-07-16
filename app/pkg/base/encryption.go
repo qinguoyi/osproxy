@@ -5,7 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
 )
 
 func decode(message string) string {

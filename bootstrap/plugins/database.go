@@ -2,10 +2,10 @@ package plugins
 
 import (
 	"fmt"
-	"github.com/qinguoyi/ObjectStorageProxy/app/models"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
-	"github.com/qinguoyi/ObjectStorageProxy/config"
-	"github.com/qinguoyi/ObjectStorageProxy/config/plugins"
+	"github.com/qinguoyi/osproxy/app/models"
+	"github.com/qinguoyi/osproxy/bootstrap"
+	"github.com/qinguoyi/osproxy/config"
+	"github.com/qinguoyi/osproxy/config/plugins"
 	"go.uber.org/zap"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"gorm.io/driver/mysql"

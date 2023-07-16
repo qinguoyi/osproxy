@@ -3,8 +3,8 @@ package storage
 import (
 	"fmt"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"io/ioutil"
 )
 

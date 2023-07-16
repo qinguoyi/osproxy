@@ -2,9 +2,9 @@ package v0
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/repo"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/web"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/app/pkg/repo"
+	"github.com/qinguoyi/osproxy/app/pkg/web"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"strconv"
 )
 

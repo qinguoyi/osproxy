@@ -6,8 +6,8 @@ package base
 
 import (
 	"errors"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/repo"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/app/pkg/repo"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"gorm.io/gorm"
 	"time"
 )
