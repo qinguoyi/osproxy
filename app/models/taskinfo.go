@@ -12,6 +12,8 @@ type TaskInfo struct {
 	NodeId      string     `json:"nodeId" gorm:"column:node_id;type:varchar(255);index:idx_node_id"` // 任务运行节点ID
 	TaskLogID   int        `json:"taskLogId" gorm:"column:task_log_id"`                              // 任务日志ID，只展示最新的任务日志ID
 	ExecuteTime int        `json:"executeTime" gorm:"column:execute_time;comment:任务执行次数;default:1"`
+	TaskTime    int64      `json:"taskTime" gorm:"column:task_time;not null;index:idx_task_time;comment:任务执行时间"`
+	Periodic    int        `json:"Periodic" gorm:"column:periodic;comment:是否是周期任务。"` //0 不是周期任务	大于0则表示周期长度 单位：秒
 	CreatedAt   *time.Time `gorm:"column:created_at;not null;comment:创建时间"`
 	UpdatedAt   *time.Time `gorm:"column:updated_at;not null;comment:更新时间"`
 }

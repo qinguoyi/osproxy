@@ -34,9 +34,13 @@ func (p *Producer) Produce() {
 		select {
 		case <-timer.C:
 			var lgDB = new(plugins.LangGoDB).Use("default").NewDB()
-			undoTaskList, _ := repo.NewTaskRepo().FindByStatus(lgDB, utils.TaskStatusUndo)
+			undoTaskList, _ := repo.NewTaskRepo().FindByStatusAndPeriodic(lgDB, utils.TaskStatusUndo)
 			for _, i := range undoTaskList {
 				// 抢占前处理
+				currentTime := time.Now()
+				if currentTime.Unix() < i.TaskTime { //未到执行时间
+					break
+				}
 				preProcess := event.NewEventsHandler().GetPreProcess(i.TaskType)
 				if preProcess != nil {
 					if f := preProcess(i.ID); !f {
@@ -50,6 +54,11 @@ func (p *Producer) Produce() {
 						TaskID:   i.ID,
 						TaskType: i.TaskType,
 					}
+				}
+				//更新周期任务下次的执行时间
+				if i.Periodic > 0 {
+					nextTime := currentTime.Add(time.Second * time.Duration(i.Periodic))
+					_ = repo.NewTaskRepo().UpdateColumn(lgDB, i.ID, "task_time", nextTime.Unix())
 				}
 			}
 

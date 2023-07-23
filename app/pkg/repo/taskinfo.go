@@ -71,6 +71,14 @@ func (r *taskInfoRepo) FindByStatus(db *gorm.DB, status int) ([]models.TaskInfo,
 	return ret, nil
 }
 
+func (r *taskInfoRepo) FindByStatusAndPeriodic(db *gorm.DB, status int) ([]models.TaskInfo, error) {
+	var ret []models.TaskInfo
+	if err := db.Where("status = ? and periodic > 0 order by task_time asc", status).Find(&ret).Error; err != nil {
+		return ret, err
+	}
+	return ret, nil
+}
+
 // Create .
 func (r *taskInfoRepo) Create(db *gorm.DB, m *models.TaskInfo) error {
 	err := db.Create(m).Error
