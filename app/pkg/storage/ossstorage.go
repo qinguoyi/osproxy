@@ -3,10 +3,9 @@ package storage
 import (
 	"fmt"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"io/ioutil"
-	"os"
 )
 
 // OssStorage oss存储
@@ -43,12 +42,12 @@ func (s *OssStorage) GetObject(bucketName, objectName string, offset, length int
 	bucket, err := s.client.Bucket(bucketName)
 	if err != nil {
 		fmt.Println("Error:", err)
-		os.Exit(-1)
+		return nil, err
 	}
 	body, err := bucket.GetObject(objectName, oss.Range(offset, offset+length-1))
 	if err != nil {
 		fmt.Println("Error:", err)
-		os.Exit(-1)
+		return nil, err
 	}
 	defer body.Close()
 	content, err := ioutil.ReadAll(body)
@@ -60,7 +59,7 @@ func (s *OssStorage) PutObject(bucketName, objectName, filePath, contentType str
 	bucket, err := s.client.Bucket(bucketName)
 	if err != nil {
 		fmt.Println("Error:", err)
-		os.Exit(-1)
+		return err
 	}
 	err = bucket.UploadFile(objectName, filePath,
 		1024*1024,
@@ -68,7 +67,7 @@ func (s *OssStorage) PutObject(bucketName, objectName, filePath, contentType str
 		oss.ContentType(contentType))
 	if err != nil {
 		fmt.Println("Error:", err)
-		os.Exit(-1)
+		return err
 	}
 	return nil
 }

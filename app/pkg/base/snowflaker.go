@@ -7,8 +7,8 @@ package base
 import (
 	"context"
 	"errors"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"strconv"
 	"sync"
 	"time"

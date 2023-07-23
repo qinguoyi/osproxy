@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/qinguoyi/ObjectStorageProxy/app/models"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/app/models"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/bootstrap"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"os"
 	"path"
 	"path/filepath"
@@ -176,7 +176,7 @@ func GetRange(rangeHeader string, size int64) (int64, int64) {
 		ranges := strings.Split(split[1], "-")
 		start, _ = strconv.ParseInt(ranges[0], 10, 64)
 		if ranges[1] != "" {
-			end, _ = strconv.ParseInt(ranges[0], 10, 64)
+			end, _ = strconv.ParseInt(ranges[1], 10, 64)
 		}
 		if end >= size || end == 0 {
 			end = size - 1

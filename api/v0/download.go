@@ -7,15 +7,15 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
-	"github.com/qinguoyi/ObjectStorageProxy/app/models"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/base"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/repo"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/storage"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/thirdparty"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/web"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap/plugins"
+	"github.com/qinguoyi/osproxy/app/models"
+	"github.com/qinguoyi/osproxy/app/pkg/base"
+	"github.com/qinguoyi/osproxy/app/pkg/repo"
+	"github.com/qinguoyi/osproxy/app/pkg/storage"
+	"github.com/qinguoyi/osproxy/app/pkg/thirdparty"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/app/pkg/web"
+	"github.com/qinguoyi/osproxy/bootstrap"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"io"
 	"net/http"
 	"os"
@@ -133,8 +133,13 @@ func DownloadHandler(c *gin.Context) {
 
 	ch := make(chan []byte, 1024*1024*20)
 	proxyFlag := false
+	// local存储: 单文件上传完uid会删除, 大文件合并后会删除
 	if bootstrap.NewConfig("").Local.Enabled {
 		dirName := path.Join(utils.LocalStore, uidStr)
+		// 不分片：单文件或大文件已合并
+		if !meta.MultiPart {
+			dirName = path.Join(utils.LocalStore, bucketName, objectName)
+		}
 		if _, err := os.Stat(dirName); os.IsNotExist(err) {
 			proxyFlag = true
 		}

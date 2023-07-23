@@ -1,8 +1,8 @@
 package repo
 
 import (
-	"github.com/qinguoyi/ObjectStorageProxy/app/models"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/app/models"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
 	"gorm.io/gorm"
 )
 
@@ -32,16 +32,22 @@ func (r *taskInfoRepo) PreemptiveTaskByID(db *gorm.DB, taskID int64, nodeId stri
 }
 
 // FinishTaskByID 完成任务
-func (r *taskInfoRepo) FinishTaskByID(db *gorm.DB, taskID int64) int64 {
+func (r *taskInfoRepo) FinishTaskByID(db *gorm.DB, taskID int64, exeTime int) int64 {
 	affected := db.Model(&models.TaskInfo{}).Where("id = ? and status = ?", taskID, utils.TaskStatusRunning).
-		UpdateColumn("status", utils.TaskStatusFinish)
+		UpdateColumns(map[string]interface{}{
+			"status":       utils.TaskStatusFinish,
+			"execute_time": exeTime,
+		})
 	return affected.RowsAffected
 }
 
 // ErrorTaskByID 任务失败
-func (r *taskInfoRepo) ErrorTaskByID(db *gorm.DB, taskID int64) int64 {
+func (r *taskInfoRepo) ErrorTaskByID(db *gorm.DB, taskID int64, exeTime int) int64 {
 	affected := db.Model(&models.TaskInfo{}).Where("id = ? and status = ?", taskID, utils.TaskStatusRunning).
-		UpdateColumn("status", utils.TaskStatusError)
+		UpdateColumns(map[string]interface{}{
+			"status":       utils.TaskStatusError,
+			"execute_time": exeTime,
+		})
 	return affected.RowsAffected
 }
 

@@ -3,8 +3,8 @@ package plugins
 import (
 	"context"
 	"fmt"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
-	"github.com/qinguoyi/ObjectStorageProxy/config"
+	"github.com/qinguoyi/osproxy/bootstrap"
+	"github.com/qinguoyi/osproxy/config"
 	"github.com/tencentyun/cos-go-sdk-v5"
 	"go.uber.org/zap"
 	"net/http"

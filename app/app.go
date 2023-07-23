@@ -3,9 +3,9 @@ package app
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/base"
-	"github.com/qinguoyi/ObjectStorageProxy/app/pkg/event/dispatch"
-	"github.com/qinguoyi/ObjectStorageProxy/config"
+	"github.com/qinguoyi/osproxy/app/pkg/base"
+	"github.com/qinguoyi/osproxy/app/pkg/event/dispatch"
+	"github.com/qinguoyi/osproxy/config"
 	"go.uber.org/zap"
 	"log"
 	"net/http"

@@ -192,7 +192,7 @@ http://127.0.0.1:8888/swagger/index.html#/
 echo passwd | docker login --username=username --password-stdin
 
 # 本地构建，version替换成自定义的有效字符，比如v0.1
-docker build -t osproxy:version -f Dockerfile  .
+docker build -t osproxy:version -f deploy/Dockerfile  .
 
 # 镜像重命名，qinguoyi/object-storage-proxy请替换成你的username/repo
 docker tag osproxy:version qinguoyi/object-storage-proxy:version

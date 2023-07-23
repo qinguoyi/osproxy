@@ -2,8 +2,8 @@ package bootstrap
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/qinguoyi/ObjectStorageProxy/config"
-	"github.com/qinguoyi/ObjectStorageProxy/utils"
+	"github.com/qinguoyi/osproxy/config"
+	"github.com/qinguoyi/osproxy/utils"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"

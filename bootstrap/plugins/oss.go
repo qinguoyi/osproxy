@@ -2,8 +2,8 @@ package plugins
 
 import (
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	"github.com/qinguoyi/ObjectStorageProxy/bootstrap"
-	"github.com/qinguoyi/ObjectStorageProxy/config"
+	"github.com/qinguoyi/osproxy/bootstrap"
+	"github.com/qinguoyi/osproxy/config"
 	"go.uber.org/zap"
 	"sync"
 )

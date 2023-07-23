@@ -1,6 +1,6 @@
 package config
 
-import "github.com/qinguoyi/ObjectStorageProxy/config/plugins"
+import "github.com/qinguoyi/osproxy/config/plugins"
 
 // Configuration 配置文件中所有字段对应的结构体
 type Configuration struct {
