@@ -1,6 +1,6 @@
 ## osproxy
 
-`osproxy`是一个使用Go语言开发的对象存储分布式代理(object-storage-distributed-proxy)，可以作为文件存储微服务，包括但不限于以下功能：
+`osproxy`是一个使用Go语言开发的对象存储分布式代理(object-storage-distributed-proxy)，可以作为文件存储微服务，文件会在服务中转处理后再对接到对象存储，包括但不限于以下功能：
 
 * 分布式uid及秒传，支持相同文件不同命名
 * 分片读写，大文件上传，merge接口不用等待数据合并，分片上传完直接下载
@@ -30,8 +30,6 @@
 ![img1.png](image/img1.png)
 
 ## API文档
-
-[在线体验API文档](http://124.222.198.8/swagger/index.html#/)
 
 ![img2.png](image/img2.png)
 
