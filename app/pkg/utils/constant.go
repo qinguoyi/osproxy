@@ -7,7 +7,7 @@ const (
 	WorkID                = "workId"
 	LinkLimit             = 50
 	EncryKey              = "*&^@#$storage"
-	LocalStore            = "/storage/localstore"
+	LocalStore            = "localstore"
 	ServiceRedisPrefix    = "service:proxy"
 	ServiceRedisTTl       = time.Second * 3 * 60
 	S3StoragePutThreadNum = 10

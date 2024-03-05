@@ -30,21 +30,21 @@ import (
 
 // DownloadHandler    下载数据
 //
-//	@Summary		下载数据
-//	@Description	下载数据
-//	@Tags			下载
-//	@Accept			application/json
-//	@Param			uid			query	string	true	"文件uid"
-//	@Param			name		query	string	true	"文件名称"
-//	@Param			online		query	string	true	"是否在线"
-//	@Param			date		query	string	true	"链接生成时间"
-//	@Param			expire		query	string	true	"过期时间"
-//	@Param			bucket		query	string	true	"存储桶"
-//	@Param			object		query	string	true	"存储名称"
-//	@Param			signature	query	string	true	"签名"
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response
-//	@Router			/api/storage/v0/download [get]
+//	@Summary      下载数据
+//	@Description  下载数据
+//	@Tags         下载
+//	@Accept       application/json
+//	@Param        uid        query  string  true  "文件uid"
+//	@Param        name       query  string  true  "文件名称"
+//	@Param        online     query  string  true  "是否在线"
+//	@Param        date       query  string  true  "链接生成时间"
+//	@Param        expire     query  string  true  "过期时间"
+//	@Param        bucket     query  string  true  "存储桶"
+//	@Param        object     query  string  true  "存储名称"
+//	@Param        signature  query  string  true  "签名"
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response
+//	@Router       /api/storage/v0/download [get]
 func DownloadHandler(c *gin.Context) {
 	// 校验参数
 	uidStr := c.Query("uid")

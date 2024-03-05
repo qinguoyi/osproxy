@@ -9,12 +9,12 @@ import (
 	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 )
 
-// @title		ObjectStorageProxy
-// @version	1.0
+// @title    ObjectStorageProxy
+// @version  1.0
 // @description
-// @contact.name	qinguoyi
-// @host			127.0.0.1:8888
-// @BasePath		/
+// @contact.name  qinguoyi
+// @host          127.0.0.1:8888
+// @BasePath      /
 func main() {
 	// config log
 	lgConfig := bootstrap.NewConfig("conf/config.yaml")

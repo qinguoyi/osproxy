@@ -13,14 +13,14 @@ import (
 
 // IsOnCurrentServerHandler   .
 //
-//	@Summary		询问文件是否在当前服务
-//	@Description	询问文件是否在当前服务
-//	@Tags			proxy
-//	@Accept			application/json
-//	@Param			uid	query	string	true	"uid"
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response
-//	@Router			/api/storage/v0/proxy [get]
+//	@Summary      询问文件是否在当前服务
+//	@Description  询问文件是否在当前服务
+//	@Tags         proxy
+//	@Accept       application/json
+//	@Param        uid  query  string  true  "uid"
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response
+//	@Router       /api/storage/v0/proxy [get]
 func IsOnCurrentServerHandler(c *gin.Context) {
 	uidStr := c.Query("uid")
 	_, err := strconv.ParseInt(uidStr, 10, 64)

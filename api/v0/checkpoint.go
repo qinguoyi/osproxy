@@ -10,14 +10,14 @@ import (
 
 // CheckPointHandler    断点续传
 //
-//	@Summary		断点续传
-//	@Description	断点续传
-//	@Tags			断点续传
-//	@Accept			application/json
-//	@Param			uid	query	string	true	"文件uid"
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response{data=[]int}
-//	@Router			/api/storage/v0/checkpoint [get]
+//	@Summary      断点续传
+//	@Description  断点续传
+//	@Tags         断点续传
+//	@Accept       application/json
+//	@Param        uid  query  string  true  "文件uid"
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response{data=[]int}
+//	@Router       /api/storage/v0/checkpoint [get]
 func CheckPointHandler(c *gin.Context) {
 	uidStr := c.Query("uid")
 	uid, err := strconv.ParseInt(uidStr, 10, 64)

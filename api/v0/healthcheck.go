@@ -15,13 +15,13 @@ var lgLogger *bootstrap.LangGoLogger
 
 // PingHandler 测试
 //
-//	@Summary		测试接口
-//	@Description	测试接口
-//	@Tags			测试
-//	@Accept			application/json
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response
-//	@Router			/api/storage/v0/ping [get]
+//	@Summary      测试接口
+//	@Description  测试接口
+//	@Tags         测试
+//	@Accept       application/json
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response
+//	@Router       /api/storage/v0/ping [get]
 func PingHandler(c *gin.Context) {
 	var lgDB = new(plugins.LangGoDB).Use("default").NewDB()
 
@@ -46,13 +46,13 @@ func PingHandler(c *gin.Context) {
 
 // HealthCheckHandler 健康检查
 //
-//	@Summary		健康检查
-//	@Description	健康检查
-//	@Tags			检查
-//	@Accept			application/json
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response
-//	@Router			/api/storage/v0/health [get]
+//	@Summary      健康检查
+//	@Description  健康检查
+//	@Tags         检查
+//	@Accept       application/json
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response
+//	@Router       /api/storage/v0/health [get]
 func HealthCheckHandler(c *gin.Context) {
 	web.Success(c, "Health...")
 	return

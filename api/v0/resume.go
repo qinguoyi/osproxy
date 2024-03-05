@@ -22,14 +22,14 @@ import (
 
 // ResumeHandler    秒传&断点续传
 //
-//	@Summary		秒传&断点续传
-//	@Description	秒传&断点续传
-//	@Tags			秒传
-//	@Accept			application/json
-//	@Param			RequestBody	body	models.ResumeReq	true	"秒传请求体"
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response{data=[]models.ResumeResp}
-//	@Router			/api/storage/v0/resume [post]
+//	@Summary      秒传&断点续传
+//	@Description  秒传&断点续传
+//	@Tags         秒传
+//	@Accept       application/json
+//	@Param        RequestBody  body  models.ResumeReq  true  "秒传请求体"
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response{data=[]models.ResumeResp}
+//	@Router       /api/storage/v0/resume [post]
 func ResumeHandler(c *gin.Context) {
 	resumeReq := models.ResumeReq{}
 	if err := c.ShouldBindJSON(&resumeReq); err != nil {
