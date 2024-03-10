@@ -496,6 +496,21 @@ func UploadMergeHandler(c *gin.Context) {
 		return
 	}
 
+	// 检查是否已存在is_merged=true的情况
+	var mergedCount int64
+	if err := lgDB.Model(&models.MultiPartInfo{}).Where("storage_uid = ? AND is_merged = ?", uid, true).Count(&mergedCount).Error; err != nil {
+		lgLogger.WithContext(c).Error("检查已合并分片失败")
+		web.InternalError(c, "检查已合并分片失败")
+		return
+	}
+
+	// 如果已有分片被标记为已合并，则处理对应逻辑
+	if mergedCount > 0 {
+		lgLogger.WithContext(c).Info("存在已合并的分片，无需重复处理")
+		// 可以根据实际情况决定是返回错误、提示信息还是其它逻辑处理
+		return
+	}
+
 	if num != int64(len(multiPartInfoList)) {
 		// 创建脏数据删除任务
 		msg := models.MergeInfo{
@@ -611,6 +626,13 @@ func UploadMergeHandler(c *gin.Context) {
 	if err := repo.NewTaskRepo().Create(lgDB, &newModelTask); err != nil {
 		lgLogger.WithContext(c).Error("创建合并任务失败", zap.Any("err", err.Error()))
 		web.InternalError(c, "创建合并任务失败")
+		return
+	}
+
+	// 文件合并成功后，更新所有相关分片的IsMerged为true
+	if err := repo.NewMultiPartInfoRepo().UpdateIsMergedByStorageUid(lgDB, uid, true); err != nil {
+		lgLogger.WithContext(c).Error("更新分片数据失败")
+		web.InternalError(c, "更新分片数据失败")
 		return
 	}
 

@@ -15,6 +15,7 @@ type MultiPartInfo struct {
 	Status       int        `gorm:"column:status;not null;comment:状态信息"`
 	CreatedAt    *time.Time `gorm:"column:created_at;not null;comment:创建时间"`
 	UpdatedAt    *time.Time `gorm:"column:updated_at;not null;comment:更新时间"`
+	IsMerged     bool       `gorm:"column:is_merged;not null;default:false;comment:是否已合并"`
 }
 
 // PartInfo .
