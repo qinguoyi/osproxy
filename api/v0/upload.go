@@ -29,19 +29,19 @@ import (
 
 // UploadSingleHandler    上传单个文件
 //
-//	@Summary		上传单个文件
-//	@Description	上传单个文件
-//	@Tags			上传
-//	@Accept			multipart/form-data
-//	@Param			file		formData	file	true	"上传的文件"
-//	@Param			uid			query		string	true	"文件uid"
-//	@Param			md5			query		string	true	"md5"
-//	@Param			date		query		string	true	"链接生成时间"
-//	@Param			expire		query		string	true	"过期时间"
-//	@Param			signature	query		string	true	"签名"
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response
-//	@Router			/api/storage/v0/upload [put]
+//	@Summary      上传单个文件
+//	@Description  上传单个文件
+//	@Tags         上传
+//	@Accept       multipart/form-data
+//	@Param        file       formData  file    true  "上传的文件"
+//	@Param        uid        query     string  true  "文件uid"
+//	@Param        md5        query     string  true  "md5"
+//	@Param        date       query     string  true  "链接生成时间"
+//	@Param        expire     query     string  true  "过期时间"
+//	@Param        signature  query     string  true  "签名"
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response
+//	@Router       /api/storage/v0/upload [put]
 func UploadSingleHandler(c *gin.Context) {
 	uidStr := c.Query("uid")
 	md5 := c.Query("md5")
@@ -251,20 +251,20 @@ func UploadSingleHandler(c *gin.Context) {
 
 // UploadMultiPartHandler    上传分片文件
 //
-//	@Summary		上传分片文件
-//	@Description	上传分片文件
-//	@Tags			上传
-//	@Accept			multipart/form-data
-//	@Param			file		formData	file	true	"上传的文件"
-//	@Param			uid			query		string	true	"文件uid"
-//	@Param			md5			query		string	true	"md5"
-//	@Param			chunkNum	query		string	true	"当前分片id"
-//	@Param			date		query		string	true	"链接生成时间"
-//	@Param			expire		query		string	true	"过期时间"
-//	@Param			signature	query		string	true	"签名"
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response
-//	@Router			/api/storage/v0/upload/multi [put]
+//	@Summary      上传分片文件
+//	@Description  上传分片文件
+//	@Tags         上传
+//	@Accept       multipart/form-data
+//	@Param        file       formData  file    true  "上传的文件"
+//	@Param        uid        query     string  true  "文件uid"
+//	@Param        md5        query     string  true  "md5"
+//	@Param        chunkNum   query     string  true  "当前分片id"
+//	@Param        date       query     string  true  "链接生成时间"
+//	@Param        expire     query     string  true  "过期时间"
+//	@Param        signature  query     string  true  "签名"
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response
+//	@Router       /api/storage/v0/upload/multi [put]
 func UploadMultiPartHandler(c *gin.Context) {
 	uidStr := c.Query("uid")
 	md5 := c.Query("md5")
@@ -439,20 +439,20 @@ func UploadMultiPartHandler(c *gin.Context) {
 
 // UploadMergeHandler     合并分片文件
 //
-//	@Summary		合并分片文件
-//	@Description	合并分片文件
-//	@Tags			上传
-//	@Accept			multipart/form-data
-//	@Param			uid			query	string	true	"文件uid"
-//	@Param			md5			query	string	true	"md5"
-//	@Param			num			query	string	true	"总分片数量"
-//	@Param			size		query	string	true	"文件总大小"
-//	@Param			date		query	string	true	"链接生成时间"
-//	@Param			expire		query	string	true	"过期时间"
-//	@Param			signature	query	string	true	"签名"
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response
-//	@Router			/api/storage/v0/upload/merge [put]
+//	@Summary      合并分片文件
+//	@Description  合并分片文件
+//	@Tags         上传
+//	@Accept       multipart/form-data
+//	@Param        uid        query  string  true  "文件uid"
+//	@Param        md5        query  string  true  "md5"
+//	@Param        num        query  string  true  "总分片数量"
+//	@Param        size       query  string  true  "文件总大小"
+//	@Param        date       query  string  true  "链接生成时间"
+//	@Param        expire     query  string  true  "过期时间"
+//	@Param        signature  query  string  true  "签名"
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response
+//	@Router       /api/storage/v0/upload/merge [put]
 func UploadMergeHandler(c *gin.Context) {
 	uidStr := c.Query("uid")
 	md5 := c.Query("md5")

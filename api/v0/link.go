@@ -25,14 +25,14 @@ import (
 
 // UploadLinkHandler    初始化上传连接
 //
-//	@Summary		初始化上传连接
-//	@Description	初始化上传连接
-//	@Tags			链接
-//	@Accept			application/json
-//	@Param			RequestBody	body	models.GenUpload	true	"生成上传链接请求体"
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response{data=models.GenUploadResp}
-//	@Router			/api/storage/v0/link/upload [post]
+//	@Summary      初始化上传连接
+//	@Description  初始化上传连接
+//	@Tags         链接
+//	@Accept       application/json
+//	@Param        RequestBody  body  models.GenUpload  true  "生成上传链接请求体"
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response{data=models.GenUploadResp}
+//	@Router       /api/storage/v0/link/upload [post]
 func UploadLinkHandler(c *gin.Context) {
 	var genUploadReq models.GenUpload
 	if err := c.ShouldBindJSON(&genUploadReq); err != nil {
@@ -98,14 +98,14 @@ func UploadLinkHandler(c *gin.Context) {
 
 // DownloadLinkHandler    获取下载连接
 //
-//	@Summary		获取下载连接
-//	@Description	获取下载连接
-//	@Tags			链接
-//	@Accept			application/json
-//	@Param			RequestBody	body	models.GenDownload	true	"下载链接请求体"
-//	@Produce		application/json
-//	@Success		200	{object}	web.Response{data=models.GenDownloadResp}
-//	@Router			/api/storage/v0/link/download [post]
+//	@Summary      获取下载连接
+//	@Description  获取下载连接
+//	@Tags         链接
+//	@Accept       application/json
+//	@Param        RequestBody  body  models.GenDownload  true  "下载链接请求体"
+//	@Produce      application/json
+//	@Success      200  {object}  web.Response{data=models.GenDownloadResp}
+//	@Router       /api/storage/v0/link/download [post]
 func DownloadLinkHandler(c *gin.Context) {
 	var genDownloadReq models.GenDownload
 	if err := c.ShouldBindJSON(&genDownloadReq); err != nil {

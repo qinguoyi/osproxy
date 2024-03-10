@@ -9,6 +9,7 @@ import (
 	"github.com/qinguoyi/osproxy/app/pkg/utils"
 	"github.com/qinguoyi/osproxy/bootstrap"
 	"github.com/qinguoyi/osproxy/bootstrap/plugins"
+	"net/url"
 	"os"
 	"path"
 	"path/filepath"
@@ -87,6 +88,7 @@ func GenUploadSingle(filename string, expire int, respChan chan models.GenUpload
 	}
 	uidStr := strconv.FormatInt(uid, 10)
 	name := filepath.Base(filename)
+	name = url.PathEscape(name)
 	storageName := fmt.Sprintf("%s.%s", uidStr, GetExtension(filename))
 	objectName := fmt.Sprintf("%s/%s", bucket, storageName)
 
@@ -136,7 +138,10 @@ func GenDownloadSingle(meta models.MetaDataInfo, expire string, respChan chan mo
 	defer wg.Done()
 	uid := meta.UID
 	bucketName := meta.Bucket
-	srcName := meta.Name
+	srcName, err := url.PathUnescape(meta.Name)
+	if err != nil {
+		fmt.Println("文件名解码失败:", err)
+	}
 	objectName := meta.StorageName
 
 	// 生成加密query
