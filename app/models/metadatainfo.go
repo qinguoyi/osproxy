@@ -25,6 +25,7 @@ type MetaDataInfo struct {
 	CompressUid int64      `gorm:"column:compress_uid;comment:压缩文件ID"`
 	CreatedAt   *time.Time `gorm:"column:created_at;not null;comment:创建时间"`
 	UpdatedAt   *time.Time `gorm:"column:updated_at;not null;comment:更新时间"`
+	IsExpired   bool       `gorm:"column:is_expired;not null;comment:是否过期"`
 }
 
 // GenUpload 上传链接请求体

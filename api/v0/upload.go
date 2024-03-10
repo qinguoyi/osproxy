@@ -487,6 +487,12 @@ func UploadMergeHandler(c *gin.Context) {
 		return
 	}
 
+	// 判断是否使用过
+	if metaData.IsExpired {
+		web.ParamsError(c, "此上传链接已过期，不再接受新的上传请求")
+		return
+	}
+
 	// 判断分片数量是否一致
 	var multiPartInfoList []models.MultiPartInfo
 	if err := lgDB.Model(&models.MultiPartInfo{}).Where(
@@ -587,6 +593,7 @@ func UploadMergeHandler(c *gin.Context) {
 		"status":       1,
 		"updated_at":   &now,
 		"content_type": contentType,
+		"is_expired":   true,
 	}); err != nil {
 		lgLogger.WithContext(c).Error("上传完更新数据失败")
 		web.InternalError(c, "上传完更新数据失败")
