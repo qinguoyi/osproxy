@@ -34,7 +34,12 @@ func preProcessPartDelete(i interface{}) bool {
 		fmt.Printf("任务不存在%v", err)
 		return false
 	}
-	return true
+	dirName := path.Join(utils.LocalStore, fmt.Sprintf("%d", msg.StorageUid))
+	if _, err := os.Stat(dirName); os.IsNotExist(err) {
+		return false
+	} else {
+		return true
+	}
 }
 
 func handlePartDelete(i interface{}) error {
