@@ -37,9 +37,9 @@ func (s *storageService) Locate(scheme, ip, port, uid string) (string, error) {
 func (s *storageService) UploadForward(c *gin.Context, scheme, ip, port, uid string, single bool) (int, *base.Response, http.Header, error) {
 	var urlStr string
 	if single {
-		urlStr = fmt.Sprintf("/api/storage/v0/upload/%s", uid)
+		urlStr = fmt.Sprintf("/api/storage/v0/upload")
 	} else {
-		urlStr = fmt.Sprintf("/api/storage/v0/upload/%s/multi", uid)
+		urlStr = fmt.Sprintf("/api/storage/v0/upload/multi")
 	}
 	// 获取查询参数
 	queryParam := map[string]string{}
@@ -105,7 +105,7 @@ func (s *storageService) UploadForward(c *gin.Context, scheme, ip, port, uid str
 
 // MergeForward .
 func (s *storageService) MergeForward(c *gin.Context, scheme, ip, port, uid string) (int, *base.Response, http.Header, error) {
-	urlStr := fmt.Sprintf("/api/storage/v0/upload/%s/merge", uid)
+	urlStr := fmt.Sprintf("/api/storage/v0/upload/merge")
 	// 获取查询参数
 	queryParam := map[string]string{}
 	query := c.Request.URL.Query()
