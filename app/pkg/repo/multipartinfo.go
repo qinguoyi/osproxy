@@ -61,3 +61,12 @@ func (r *multiPartInfoRepo) BatchCreate(db *gorm.DB, m *[]models.MultiPartInfo) 
 	err := db.Create(m).Error
 	return err
 }
+
+// UpdateIsMergedByStorageUid 根据storageUid更新IsMerged字段
+func (r *multiPartInfoRepo) UpdateIsMergedByStorageUid(db *gorm.DB, uid int64, b bool) error {
+	result := db.Model(&models.MultiPartInfo{}).Where("storage_uid = ?", uid).Update("is_merged", b)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
