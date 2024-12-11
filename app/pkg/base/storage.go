@@ -61,11 +61,11 @@ func CheckValid(uidStr, date, expireStr string) (int64, string, error) {
 	}
 
 	lgDB := new(plugins.LangGoDB).Use("default").NewDB()
-	isMerge, err := repo.NewMetaDataInfoCheckRepo().GetUIDIsMerge(lgDB, uid)
+	isMerged, err := repo.NewMetaDataInfoCheckRepo().GetUIDIsMerged(lgDB, uid)
 	if err != nil {
 		return uid, fmt.Sprintf("获取是否合并失败，详情:%s", err), err
 	}
-	if isMerge {
+	if isMerged {
 		return uid, "文件已合并", errors.New("文件已合并")
 	}
 

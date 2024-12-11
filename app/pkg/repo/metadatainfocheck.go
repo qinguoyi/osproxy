@@ -11,12 +11,12 @@ func NewMetaDataInfoCheckRepo() *metadatainfocheckRepo {
 	return &metadatainfocheckRepo{}
 }
 
-func (r *metadatainfocheckRepo) GetUIDIsMerge(db *gorm.DB, uid int64) (bool, error) {
+func (r *metadatainfocheckRepo) GetUIDIsMerged(db *gorm.DB, uid int64) (bool, error) {
 	ret := &models.MetaDataInfoCheck{}
 	if err := db.Where("uid = ?", uid).First(ret).Error; err != nil {
 		return false, err
 	}
-	return ret.Merge, nil
+	return ret.IsMerged, nil
 }
 
 func (r *metadatainfocheckRepo) UpdateMerge(db *gorm.DB, uid int64, merge bool) error {
