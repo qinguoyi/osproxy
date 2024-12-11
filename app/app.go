@@ -2,17 +2,18 @@ package app
 
 import (
 	"context"
-	"github.com/gin-gonic/gin"
-	"github.com/qinguoyi/osproxy/app/pkg/base"
-	"github.com/qinguoyi/osproxy/app/pkg/event/dispatch"
-	"github.com/qinguoyi/osproxy/config"
-	"go.uber.org/zap"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/qinguoyi/osproxy/app/pkg/base"
+	"github.com/qinguoyi/osproxy/app/pkg/event/dispatch"
+	"github.com/qinguoyi/osproxy/config"
+	"go.uber.org/zap"
 )
 
 // App 应用结构体
@@ -60,7 +61,7 @@ func (a *App) RunServer() {
 	p, consumers := dispatch.RunTask()
 
 	// 等待中断信号以优雅地关闭应用
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 

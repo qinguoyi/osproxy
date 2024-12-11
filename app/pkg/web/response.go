@@ -2,9 +2,10 @@ package web
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"io"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 /*
@@ -21,7 +22,7 @@ type Response struct {
 // StreamSuccess .
 func StreamSuccess(c *gin.Context, step func(w io.Writer) bool) {
 	flag := c.Stream(step)
-	fmt.Println(fmt.Sprintf("+++---%s---+++", flag))
+	fmt.Printf("+++---%v---+++", flag)
 	if flag {
 		c.Status(200)
 	} else {

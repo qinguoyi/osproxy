@@ -5,6 +5,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"path"
+	"sync"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
 	"github.com/qinguoyi/osproxy/app/models"
@@ -16,12 +23,6 @@ import (
 	"github.com/qinguoyi/osproxy/app/pkg/web"
 	"github.com/qinguoyi/osproxy/bootstrap"
 	"github.com/qinguoyi/osproxy/bootstrap/plugins"
-	"io"
-	"net/http"
-	"os"
-	"path"
-	"sync"
-	"time"
 )
 
 /*
@@ -64,7 +65,7 @@ func DownloadHandler(c *gin.Context) {
 		return
 	}
 
-	uid, err, errorInfo := base.CheckValid(uidStr, date, expireStr)
+	uid, errorInfo, err := base.CheckValid(uidStr, date, expireStr)
 	if err != nil {
 		web.ParamsError(c, errorInfo)
 		return

@@ -5,10 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/qinguoyi/osproxy/app/models"
-	"github.com/qinguoyi/osproxy/app/pkg/utils"
-	"github.com/qinguoyi/osproxy/bootstrap"
-	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"net/url"
 	"os"
 	"path"
@@ -17,6 +13,12 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/qinguoyi/osproxy/app/models"
+	"github.com/qinguoyi/osproxy/app/pkg/repo"
+	"github.com/qinguoyi/osproxy/app/pkg/utils"
+	"github.com/qinguoyi/osproxy/bootstrap"
+	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 )
 
 var lgLogger *bootstrap.LangGoLogger
@@ -51,29 +53,38 @@ func selectBucketBySuffix(filename string) string {
 	}
 }
 
-func CheckValid(uidStr, date, expireStr string) (int64, error, string) {
+func CheckValid(uidStr, date, expireStr string) (int64, string, error) {
 	// check
 	uid, err := strconv.ParseInt(uidStr, 10, 64)
 	if err != nil {
-		return 0, err, fmt.Sprintf("uid参数有误，详情:%s", err)
+		return 0, fmt.Sprintf("uid参数有误，详情:%s", err), err
+	}
+
+	lgDB := new(plugins.LangGoDB).Use("default").NewDB()
+	isMerged, err := repo.NewMetaDataInfoCheckRepo().GetUIDIsMerged(lgDB, uid)
+	if err != nil {
+		return uid, fmt.Sprintf("获取是否合并失败，详情:%s", err), err
+	}
+	if isMerged {
+		return uid, "文件已合并", errors.New("文件已合并")
 	}
 
 	loc, _ := time.LoadLocation("Local")
 	t, err := time.ParseInLocation("2006-01-02T15:04:05Z", date, loc)
 	if err != nil {
-		return uid, err, fmt.Sprintf("时间参数转换失败，详情:%s", err)
+		return uid, fmt.Sprintf("时间参数转换失败，详情:%s", err), err
 	}
 
 	expire, err := strconv.ParseInt(expireStr, 10, 64)
 	if err != nil {
-		return uid, err, fmt.Sprintf("expire参数有误，详情:%s", err)
+		return uid, fmt.Sprintf("expire参数有误，详情:%s", err), err
 	}
 	now := time.Now().In(loc)
 	duration := now.Sub(t)
 	if int64(duration.Seconds()) > expire {
-		return uid, errors.New("链接时间已过期"), "链接时间已过期"
+		return uid, "链接时间已过期", errors.New("链接时间已过期")
 	}
-	return uid, nil, ""
+	return uid, "", nil
 }
 
 // GenUploadSingle .

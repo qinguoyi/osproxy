@@ -4,6 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
+	"os"
+	"path"
+	"strconv"
+	"sync"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/qinguoyi/osproxy/app/models"
 	"github.com/qinguoyi/osproxy/app/pkg/base"
@@ -15,12 +22,6 @@ import (
 	"github.com/qinguoyi/osproxy/bootstrap"
 	"github.com/qinguoyi/osproxy/bootstrap/plugins"
 	"go.uber.org/zap"
-	"io"
-	"os"
-	"path"
-	"strconv"
-	"sync"
-	"time"
 )
 
 /*
@@ -49,7 +50,7 @@ func UploadSingleHandler(c *gin.Context) {
 	expireStr := c.Query("expire")
 	signature := c.Query("signature")
 
-	uid, err, errorInfo := base.CheckValid(uidStr, date, expireStr)
+	uid, errorInfo, err := base.CheckValid(uidStr, date, expireStr)
 	if err != nil {
 		web.ParamsError(c, errorInfo)
 		return
@@ -273,7 +274,7 @@ func UploadMultiPartHandler(c *gin.Context) {
 	expireStr := c.Query("expire")
 	signature := c.Query("signature")
 
-	uid, err, errorInfo := base.CheckValid(uidStr, date, expireStr)
+	uid, errorInfo, err := base.CheckValid(uidStr, date, expireStr)
 	if err != nil {
 		web.ParamsError(c, errorInfo)
 		return
@@ -462,7 +463,7 @@ func UploadMergeHandler(c *gin.Context) {
 	expireStr := c.Query("expire")
 	signature := c.Query("signature")
 
-	uid, err, errorInfo := base.CheckValid(uidStr, date, expireStr)
+	uid, errorInfo, err := base.CheckValid(uidStr, date, expireStr)
 	if err != nil {
 		web.ParamsError(c, errorInfo)
 		return
@@ -611,6 +612,13 @@ func UploadMergeHandler(c *gin.Context) {
 	if err := repo.NewTaskRepo().Create(lgDB, &newModelTask); err != nil {
 		lgLogger.WithContext(c).Error("创建合并任务失败", zap.Any("err", err.Error()))
 		web.InternalError(c, "创建合并任务失败")
+		return
+	}
+
+	// 文件合并成功后，更新所有相关分片的IsMerged为true
+	if err := repo.NewMetaDataInfoCheckRepo().UpdateMerge(lgDB, uid, true); err != nil {
+		lgLogger.WithContext(c).Error("更新分片数据失败")
+		web.InternalError(c, "更新分片数据失败")
 		return
 	}
 
